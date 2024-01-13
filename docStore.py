@@ -25,5 +25,18 @@ pinecone.init(
     api_key=api_key,
     environment='gcp-starter'
 )
-
 index = pinecone.Index('testing')
+
+
+#Textbook Extraction to make digestable for docu store
+from TextBookExctraction import Process_PDF
+#max_chunk_length is the max token length of each vector within the database
+#stride refers to the step taken to find the middle of each vector. 
+#If stride is 2, we move 2 steps forwards and if max_length is 3, each vector will contain 3 tokens with an overlap of 1
+# [1,2,3] , [3,4,5], [5,6,7], ... , [n-1,n,n+1]            with each array referring to a chunk/vector
+pdf_processor = Process_PDF(pdf_path="./Textbooks/CrackingTheCodingInterview.pdf")
+text = pdf_processor.extract_text_from_pdf()
+cleaned_text = pdf_processor.preprocess_text(text)
+text_chunks = pdf_processor.segment_text(cleaned_text, max_chunk_length=384, stride=128)
+print(len(text_chunks))
+ 
