@@ -1,0 +1,10 @@
+Pinecone Document Store
+
+max size of a vector = 20MB
+
+Namespaces:
+no maximum unless running the gcp-starter (free version)  //this would imply a maximum of 100 users
+
+Haystack:
+
+Retriever:

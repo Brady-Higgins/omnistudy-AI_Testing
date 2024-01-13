@@ -1,3 +1,8 @@
+#uses the MyUPDf library to split a textbook into 500 word chunks
+#More advanced versions may split via paragraph and not exact chunks
+
+
+
 import fitz
 
 class Process_PDF:
