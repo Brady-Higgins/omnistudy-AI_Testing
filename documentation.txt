@@ -3,8 +3,15 @@ Pinecone Document Store
 max size of a vector = 20MB
 
 Namespaces:
+A unique namespace will be used per each user:
+Pros: the nlp will only pull info from the users documents they've uploaded (increasing speed and removing the possibility of data corruption with conflicting texts)
+cons: multiple of the same textbooks potentially in the database
 no maximum unless running the gcp-starter (free version)  //this would imply a maximum of 100 users
 
 Haystack:
-
+we're using this for the embeddings, retriever, and reader model
 Retriever:
+
+Potential Issues: 
+upload speed is slow for a textbook.
+=35min upload speed

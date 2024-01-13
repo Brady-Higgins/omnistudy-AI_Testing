@@ -1,7 +1,9 @@
 #uses the MyUPDf library to split a textbook into 500 word chunks
 #More advanced versions may split via paragraph and not exact chunks
 
-
+#Issues:
+#currently splits words
+#experiment with text sizes, lots of overlap right now, leading to very ineffficient uploads
 
 import fitz
 

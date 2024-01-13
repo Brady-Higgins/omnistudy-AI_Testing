@@ -23,14 +23,22 @@ api_key = os.getenv("PINECONE_API_KEY")
 
 #Initialize pinecone doc store
 from haystack.document_stores import PineconeDocumentStore
+# document_store = PineconeDocumentStore(
+#      api_key=api_key,
+#      index='haystack-lfqa',
+#      similarity="cosine",
+#      embedding_dim=768
+# )
+
 document_store = PineconeDocumentStore(
-     api_key=api_key,
-     index='haystack-lfqa',
-     similarity="cosine",
-     embedding_dim=768
+    api_key=api_key
+    pinecone_index='haystack'
+    index='haystack'
+    similarity="cosine",
+    embedding_dim=768
 )
 
-
+document_store.
 #Textbook Extraction to make digestable for docu store
 from TextBookExctraction import Process_PDF
 #max_chunk_length is the max token length of each vector within the database
