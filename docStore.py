@@ -14,12 +14,53 @@
 from dotenv import load_dotenv
 import os
 
+class docStore:
+    def __init__(self):
+        self.pinecone_api_key=""
+        self.huggingface_api_token=""
+    def initialize_index(self,index_name):
+        pass
+    def Assign_API_Keys(self):
+        #Load environment variables from .env file
+        
+        #overide = true just forces a reload on the .env file in case api key changes
+        load_dotenv(override=True)
+        # Access the API key
+        self.pinecone_api_key = os.getenv("PINECONE_API_KEY")
+        self.huggingface_api_token = os.getenv("HUGGING_FACE_API_TOKEN")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import pinecone
+from dotenv import load_dotenv
+import os
+
 # Load environment variables from .env file
-load_dotenv()
+#overide = true just forces a reload on the .env file in case api key changes
+load_dotenv(override=True)
 
 # Access the API key
-api_key = os.getenv("PINECONE_API_KEY")
+pinecone_api_key = os.getenv("PINECONE_API_KEY")
+huggingface_api_token = os.getenv("HUGGING_FACE_API_TOKEN")
 
+#Initialize the pinecone index     
+pinecone.init(      
+	api_key=pinecone_api_key,      
+	environment='gcp-starter'      
+)      
+index = pinecone.Index('haystack')
 
 #Initialize pinecone doc store
 from haystack.document_stores import PineconeDocumentStore
@@ -73,4 +114,6 @@ for d in text_chunks:
         # Index documents to Pinecone
         document_store.write_documents(docs)
         docs.clear()
+
+from haystack.document_stores import pinecone
 
