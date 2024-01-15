@@ -7,6 +7,7 @@ A unique namespace will be used per each user:
 Pros: the nlp will only pull info from the users documents they've uploaded (increasing speed and removing the possibility of data corruption with conflicting texts)
 cons: multiple of the same textbooks potentially in the database
 no maximum unless running the gcp-starter (free version)  //this would imply a maximum of 100 users
+alt: Each book could occupy a namespace and users could then prompt a specific book they're asking questions from (implies: 100 books in system max if we're free version)
 
 Haystack:
 we're using this for the embeddings, retriever, and reader model
@@ -14,4 +15,6 @@ Retriever:
 
 Potential Issues: 
 upload speed is slow for a textbook.
-=35min upload speed
+=35min upload speed on last run (should be halved now)
+TextBookExtraction is poor (keeps \n and cuts off words)
+-Potential Fix: haystack has document preprocessing+processing and so does pinecone
