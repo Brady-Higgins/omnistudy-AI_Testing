@@ -8,8 +8,8 @@
 
 
 #I did this within a virtual env and stored my api key as an env variable. Neccessary installs are below
-#pip install pinecone-client
-#pip install farm-haystack[pinecone]
+#pip install MyuPDF
+#pip install farm-haystack[colab,ocr, pinecone, preprocessing,file-conversion,pdf]
 #tqdm version problems, so had to edit tqdm/auto.py to ignore tqdm_asyncio
 
 #env + system imports
@@ -79,9 +79,7 @@ class context_QA:
         self.search_pipe = DocumentSearchPipeline(retriever=self.retriever)
 
         self.QA_pipeline = Pipeline()
-        prompt ="""Synthesize a comprehensive answer from the following top_k most relevant paragraphs and the given question. 
-                             Provide a clear and concise response that summarizes the key points and information presented in the paragraphs. 
-                             Your answer should be in your own words and be no longer than 50 words. 
+        prompt ="""Synthesize a comprehensive answer from the following relevant paragraphs and the given question. Provide a clear and concise response that summarizes the key points and information presented in the paragraphs. Your answer should be in your own words. 
                              \n\n Paragraphs: {join(documents)} \n\n Question: {query} \n\n Answer:"""
         template = PromptTemplate(prompt=prompt,output_parser=AnswerParser())
         node = PromptNode(model_name_or_path="mistralai/Mistral-7B-v0.1",default_prompt_template=template,api_key=self.huggingface_api_token)

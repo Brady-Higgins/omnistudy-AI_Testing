@@ -1,6 +1,6 @@
 Pinecone Document Store
-
 max size of a vector = 20MB
+Vector: a text chunk of a document w/ it's value being determined by word and sentence similiarity calculations
 
 Namespaces:
 A unique namespace will be used per each user:
@@ -8,13 +8,19 @@ Pros: the nlp will only pull info from the users documents they've uploaded (inc
 cons: multiple of the same textbooks potentially in the database
 no maximum unless running the gcp-starter (free version)  //this would imply a maximum of 100 users
 alt: Each book could occupy a namespace and users could then prompt a specific book they're asking questions from (implies: 100 books in system max if we're free version)
+paid version is $850 per 365 days (if running 24/7)
 
 Haystack:
 we're using this for the embeddings, retriever, and reader model
 Retriever:
+Embedding retriever: generates documents based on sentence similiarity
+Dense retriever: not using, but does dense calculations to determine similiarity (max length of 100 tokens)
+
 
 Potential Issues: 
 upload speed is slow for a textbook.
 =35min upload speed on last run (should be halved now)
 TextBookExtraction is poor (keeps \n and cuts off words)
 -Potential Fix: haystack has document preprocessing+processing and so does pinecone
+-Another issue arising from currint Textbook extraction is the nlp model gets very confused from \n and will produce an answer of just \n sometimes if the context documents provided
+are bad or have a low similiarity score
