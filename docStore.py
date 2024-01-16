@@ -82,6 +82,9 @@ class context_QA:
         prompt ="""Synthesize a comprehensive answer from the following relevant paragraphs and the given question. Provide a clear and concise response that summarizes the key points and information presented in the paragraphs. Your answer should be in your own words. 
                              \n\n Paragraphs: {join(documents)} \n\n Question: {query} \n\n Answer:"""
         template = PromptTemplate(prompt=prompt,output_parser=AnswerParser())
+        #api_key=self.huggingface_api_token
+        #model_name_or_path="mistralai/Mistral-7B-v0.1"
+        #model_name_or_path="google/flan-t5-xxl"   #massive mem problem
         node = PromptNode(model_name_or_path="mistralai/Mistral-7B-v0.1",default_prompt_template=template,api_key=self.huggingface_api_token)
         self.QA_pipeline.add_node(component=node,name="prompt_node",inputs=["Query"])
     def train_retriever(self,pdf_path):
@@ -109,8 +112,7 @@ class context_QA:
             if counter == total_doc_count:
                 break
     def QA_output(self,query):
-        print(type(self.search_pipe))
-        print(type(self.QA_pipeline))
+        print(self.search_pipe.run(query=query,params={"Retriever": {"top_k": 2}})['documents'])
         res=self.QA_pipeline.run(query=query,documents=self.search_pipe.run(query=query,params={"Retriever": {"top_k": 2}})['documents'])
         return res['answers']
     def initQA(self,index_name,top_k):
