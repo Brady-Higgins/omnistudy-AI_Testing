@@ -1,6 +1,9 @@
 Pinecone Document Store
 max size of a vector = 20MB
 Vector: a text chunk of a document w/ it's value being determined by word and sentence similiarity calculations
+FireBase: hosting ML models and storing documents
+1GB stored
+Set a cap on user uploads to 10MB with limited feature access
 
 Namespaces:
 A unique namespace will be used per each user:
@@ -18,9 +21,32 @@ Dense retriever: not using, but does dense calculations to determine similiarity
 
 
 Potential Issues: 
-upload speed is slow for a textbook.
-=35min upload speed on last run (should be halved now)
-TextBookExtraction is poor (keeps \n and cuts off words)
--Potential Fix: haystack has document preprocessing+processing and so does pinecone
--Another issue arising from currint Textbook extraction is the nlp model gets very confused from \n and will produce an answer of just \n sometimes if the context documents provided
-are bad or have a low similiarity score
+LLM model needs to be altered
+model needs: high token limit (sometimes changable within) and high scores
+potential switch to RAG
+
+
+Integration Into Omnistudy Project:
+Create an index
+distribute a .env w/ api_key
+add py files
+
+Struc:
+
+haystack_embedder
+input: location of file
+output: nothing
+effect: will upload textbook to pinecone index
+
+haystack_DocStore
+input:none
+output: document store object
+effect: document store object for manipulation
+
+QA_pipeline
+input: Book name
+output: QA pipeline object 
+
+Question_Gen_Pipeline
+input: Book name
+output: Question_Gen pipeline object
