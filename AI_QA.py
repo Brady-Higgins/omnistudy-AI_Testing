@@ -11,6 +11,7 @@
 #pip install MyuPDF
 #pip install farm-haystack[colab,ocr, pinecone, preprocessing,file-conversion,pdf]
 #tqdm version problems, so had to edit tqdm/auto.py to ignore tqdm_asyncio
+#a modified version of the tqdm folder is within dependencies for your convience
 
 #env + system imports
 from dotenv import load_dotenv
@@ -19,15 +20,9 @@ import os
 import pinecone  
 from haystack.document_stores import PineconeDocumentStore
 from haystack.pipelines import DocumentSearchPipeline
-from haystack.nodes import PromptNode, PromptTemplate, AnswerParser, EmbeddingRetriever
-from haystack import Pipeline
+from haystack.nodes import EmbeddingRetriever
 from haystack.pipelines import DocumentSearchPipeline
-import torch
-from transformers import AutoTokenizer, AutoModel, AutoModelForSeq2SeqLM
-from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
-
-# #PDF Processing
-from TextBookExctraction import Process_PDF
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 class QA:
     def __init__(self):
