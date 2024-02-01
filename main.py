@@ -1,9 +1,15 @@
 from AI_QA import QA
+from Process_PDF import FileUpload
 
 def main():
-    pass
+    # f = FileUpload()
+    # path = ".\Textbooks\CrackingTheCodingInterview.pdf"
+    # textbook_name="CrackingTheCodingInterview"
+    # f.upload(path=path,textbook_name=textbook_name)
+    # print("Complete")
+
     Bart = QA()
-    Bart.init_QA(index_name = 'haystack')
+    Bart.init_QA(index_name = 'haystack',namespace= 'CrackingTheCodingInterview')
     user_input=""
     while user_input!="Exit":
         user_input = input("Question: ")

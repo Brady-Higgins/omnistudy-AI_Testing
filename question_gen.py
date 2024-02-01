@@ -1,4 +1,18 @@
-#env + system imports
+
+# # Use a pipeline as a high-level helper
+# from transformers import pipeline
+
+# pipe = pipeline("text2text-generation", model="voidful/context-only-question-generator")
+
+# # Load model directly
+# from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
+# tokenizer = AutoTokenizer.from_pretrained("voidful/context-only-question-generator")
+# model = AutoModelForSeq2SeqLM.from_pretrained("voidful/context-only-question-generator")
+
+
+
+
 from dotenv import load_dotenv
 import os
 #pincone
@@ -9,7 +23,7 @@ from haystack.nodes import EmbeddingRetriever
 from haystack.pipelines import DocumentSearchPipeline
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-class QA:
+class question_gen:
     def __init__(self):
         self.pinecone_api_key=""
         self.huggingface_api_token=""
@@ -17,7 +31,7 @@ class QA:
         self.search_pipe=None
         self.QA_pipeline=None
         self.search_pipe=None
-    def init_document_store(self,index_name,namespace):
+    def init_document_store(self,index_name):
         #Initialize the pinecone index
         pinecone.init(      
         api_key=self.pinecone_api_key,      
@@ -28,24 +42,18 @@ class QA:
         self.document_store = PineconeDocumentStore(
         api_key=self.pinecone_api_key,
         pinecone_index=index,
-        namespace=namespace,
         similarity="cosine",
         embedding_dim=768
         )
-        print(f"Pinecone API Key: {self.pinecone_api_key}")
-
     def Assign_API_Keys(self):
         #Load environment variables from .env file
         # (overide = true) just forces a reload on the .env file in case api key changes
-        # dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..','..','..', 'client', '.env')
-        dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'.env')
-        load_dotenv(dotenv_path,override=True)
+        load_dotenv(override=True)
         # Access the API key
         self.pinecone_api_key = os.getenv("PINECONE_API_KEY")
         self.huggingface_api_token = os.getenv("HUGGING_FACE_API_TOKEN")   
     def init_retriever(self):
         retriever = EmbeddingRetriever(
-        api_key=self.pinecone_api_key,
         document_store=self.document_store,
         embedding_model="flax-sentence-embeddings/all_datasets_v3_mpnet-base",
         model_format="sentence_transformers",
@@ -82,11 +90,17 @@ class QA:
 
         return tokenizer.batch_decode(generated_answers_encoded, skip_special_tokens=True,clean_up_tokenization_spaces=True)
     
-    def init_QA(self,index_name,namespace):
+    def init_QA(self,index_name):
         self.Assign_API_Keys()
-        self.init_document_store(index_name,namespace=namespace)
+        self.init_document_store(index_name)
         self.init_retriever()
         
+
+
+#
+#index_name = 'haystack'
+#pdf_path="./Textbooks/CrackingTheCodingInterview.pdf"
+#top_k=3
 
 
 
